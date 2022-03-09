@@ -1,5 +1,7 @@
 import sqlite3
 
+from prettytable import PrettyTable
+
 connection = sqlite3.connect("mobile.db")
 
 table_list = connection.execute("select name from sqlite_master where type='table' and name='smartphones'").fetchall()
@@ -50,26 +52,17 @@ while True:
 
         result = connection.execute("select * from smartphones where serialno= "+getserialno)
 
+        table = PrettyTable(["Id","serialno","mobilebrand","mobilename","getmanufactureyear","manufacturemonth","price"])
         for i in result:
-            print("Id =>", i[0])
-            print("serialno =>", i[1])
-            print("mobilebrand =>", i[2])
-            print("mobilename =>", i[3])
-            print("manufactureyear =>", i[4])
-            print("manufacturemonth =>", i[5])
-            print("price =>", i[6])
+            table.add_row([i[0],i[1],i[2],i[3],i[4],i[5],i[6]])
+            print(table)
 
     elif choice == 3:
         result = connection.execute("select * from smartphones")
-
+        table = PrettyTable(["Id","serialno","mobilebrand","mobilename","getmanufactureyear","manufacturemonth","price"])
         for i in result:
-            print("Id =>", i[0])
-            print("serialno =>", i[1])
-            print("mobilebrand =>", i[2])
-            print("mobilename =>", i[3])
-            print("manufactureyear =>", i[4])
-            print("manufacturemonth =>", i[5])
-            print("price =>", i[6])
+            table.add_row([i[0],i[1],i[2],i[3],i[4],i[5],i[6]])
+            print(table)
 
     elif choice == 4:
         getserialno = input("enter the serial number:")
@@ -88,14 +81,11 @@ while True:
 
         print("data updated")
 
+        table = PrettyTable(
+            ["Id", "serialno", "mobilebrand", "mobilename", "getmanufactureyear", "manufacturemonth", "price"])
         for i in result:
-            print("Id =>", i[0])
-            print("serialno =>", i[1])
-            print("mobilebrand =>", i[2])
-            print("mobilename =>", i[3])
-            print("manufactureyear =>", i[4])
-            print("manufacturemonth =>", i[5])
-            print("price =>", i[6])
+            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5], i[6]])
+            print(table)
 
     elif choice == 5:
         getserialno = input("enter the serialno: ")
@@ -109,14 +99,11 @@ while True:
 
         print("data updated")
 
+        table = PrettyTable(
+            ["Id", "serialno", "mobilebrand", "mobilename", "getmanufactureyear", "manufacturemonth", "price"])
         for i in result:
-            print("Id =>", i[0])
-            print("serialno =>", i[1])
-            print("mobilebrand =>", i[2])
-            print("mobilename =>", i[3])
-            print("manufactureyear =>", i[4])
-            print("manufacturemonth =>", i[5])
-            print("price =>", i[6])
+            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5], i[6]])
+            print(table)
 
     elif choice == 6:
         break
