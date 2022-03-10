@@ -30,7 +30,14 @@ while True:
     print("3. view all mobile phone")
     print("4. update an mobile phone using serialnumber")
     print("5. delete an mobile phone using serialnumber")
-    print("6. exit")
+    print("6. view the most expensive mobile phone")
+    print("7. view the less expensive mobile phone")
+    print("8. view the average cost of mobile phone")
+    print("9. display total count of mobile phone in stock")
+    print("10. display total amount of mobile phone in stock")
+    print("11. display total amount of mobile phone in stock based on each brand")
+    print("12. display the mobile phone based on price range")
+    print("13. exit")
 
     choice = int(input("enter your choice: "))
 
@@ -99,13 +106,61 @@ while True:
 
         print("data updated")
 
-        table = PrettyTable(
-            ["Id", "serialno", "mobilebrand", "mobilename", "getmanufactureyear", "manufacturemonth", "price"])
+        table = PrettyTable(["Id","serialno","mobilebrand","mobilename","getmanufactureyear","manufacturemonth","price"])
         for i in result:
-            table.add_row([i[0], i[1], i[2], i[3], i[4], i[5], i[6]])
+            table.add_row([i[0],i[1],i[2],i[3],i[4],i[5],i[6]])
             print(table)
 
     elif choice == 6:
+        result= connection.execute("select max(price) as price from smartphones")
+
+        for i in result:
+            print("max value=>",i[0])
+
+    elif choice == 7:
+        result = connection.execute("select min(price) as price from smartphones")
+
+        for i in result:
+            print("min value=>", i[0])
+
+    elif choice == 8:
+        result = connection.execute("select avg(price) as price from smartphones")
+
+        for i in result:
+            print("average value=>", i[0])
+
+    elif choice == 9:
+        result = connection.execute("select count(*) as price from smartphones")
+
+        for i in result:
+            print("total count=>", i[0])
+
+    elif choice == 10:
+        result = connection.execute("select * from smartphones where price=(select max(price) from smartphones)")
+
+        table = PrettyTable(["Id","serialno","mobilebrand","mobilename","getmanufactureyear","manufacturemonth","price"])
+        for i in result:
+            table.add_row([i[0],i[1],i[2],i[3],i[4],i[5],i[6]])
+            print(table)
+
+    elif choice == 11:
+        result = connection.execute("select sum(price) as price from smartphones")
+
+        for i in result:
+            print("sum of cost=>", i[0])
+
+    elif choice == 12:
+        loweramount = input("enter the lower amount")
+        higheramount = input("enter the higher amount")
+        result = connection.execute("select * from smartphones where price between "+loweramount+" AND "+higheramount+"")
+
+        table = PrettyTable(["Id","serialno","mobilebrand","mobilename","getmanufactureyear","manufacturemonth","price"])
+        for i in result:
+            table.add_row([i[0],i[1],i[2],i[3],i[4],i[5],i[6]])
+            print(table)
+
+
+    elif choice == 13:
         break
 
     else:
